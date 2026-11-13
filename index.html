@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Player CRT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="tv" id="tv">
+  <div class="bezel">
+    <div class="screen crt-on" id="screen">
+      <video id="v" playsinline></video>
+      <div class="art" id="art">
+        <img id="cover" alt="Capa do álbum" hidden>
+        <div class="nocover" id="nocover">♪</div>
+        <div><b id="ttl"></b><span id="sub"></span></div>
+      </div>
+      <div class="fx crt scan"></div>
+      <div class="fx crt mask"></div>
+      <div class="fx crt flicker"></div>
+      <div class="fx crt roll"></div>
+      <div class="fx crt vig"></div>
+      <div class="fx glare"></div>
+      <canvas id="noise" width="160" height="100"></canvas>
+      <div class="osd" id="osd"></div>
+      <div class="empty" id="empty">
+        <div>SEM SINAL<br>Escolha uma pasta com<br>vídeos ou músicas<br>
+          <button id="emptyBtn">Abrir pasta</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ctrl">
+    <button id="prev" aria-label="Anterior">⏮</button>
+    <button id="play" aria-label="Reproduzir">▶</button>
+    <button id="next" aria-label="Próximo">⏭</button>
+    <input class="seek" id="seek" type="range" min="0" max="1000" value="0" aria-label="Posição">
+    <span class="time" id="time">0:00 / 0:00</span>
+  </div>
+  <div class="ctrl">
+    <div class="knobs">🔊 <input id="vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume"></div>
+    <button id="crt" aria-pressed="true">Efeito CRT</button>
+    <div class="knobs">Intensidade <input id="int" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="Intensidade do CRT"></div>
+    <button id="fs">Tela cheia</button>
+    <span class="led" id="led" title="Ligado"></span>
+  </div>
+</main>
+
+<aside class="list">
+  <header>
+    <div><h2 id="folder">Biblioteca</h2><small id="count">Nenhuma pasta aberta</small></div>
+    <button class="open" id="open">Abrir pasta</button>
+  </header>
+  <ol id="ol"></ol>
+  <p class="hint" id="hint">Os arquivos são lidos localmente; nada é enviado. AVI, WMV e similares são convertidos no navegador (precisa de internet na primeira vez). Atalhos: espaço, ← →, N, P, F.</p>
+</aside>
+
+<input type="file" id="picker" webkitdirectory directory multiple hidden>
+
+<script src="script.js"></script>
+</body>
+</html>
