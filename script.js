@@ -10,17 +10,56 @@ const ext = n => (n.split('.').pop() || '').toLowerCase();
 const clean = n => n.replace(/\.[^.]+$/, '');
 const fmt = s => isFinite(s) ? Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0') : '0:00';
 
-/* ---- carregar pasta ---- */
+/* ---- carregar pasta ou arquivos ---- */
 $('open').onclick = $('emptyBtn').onclick = () => $('picker').click();
+$('openFiles').onclick = $('emptyFilesBtn').onclick = () => $('filePicker').click();
 
-$('picker').onchange = e => {
-  const files = [...e.target.files].filter(f => AUDIO_EXT.test(f.name) || VIDEO_EXT.test(f.name) || /^(audio|video)\//.test(f.type));
+function mapMediaFiles(fileList) {
+  const files = [...fileList].filter(f => AUDIO_EXT.test(f.name) || VIDEO_EXT.test(f.name) || /^(audio|video)\//.test(f.type));
   files.sort((a,b) => (a.webkitRelativePath||a.name).localeCompare(b.webkitRelativePath||b.name, undefined, {numeric:true}));
-  items = files.map(f => ({file:f, kind: AUDIO_EXT.test(f.name) || f.type.startsWith('audio/') ? 'audio' : 'video', stage:null}));
-  $('folder').textContent = files[0]?.webkitRelativePath?.split('/')[0] || 'Biblioteca';
-  $('count').textContent = items.length ? items.length + (items.length === 1 ? ' arquivo' : ' arquivos') : 'Nenhuma mídia encontrada';
+  return files.map(f => ({
+    file: f,
+    kind: AUDIO_EXT.test(f.name) || f.type.startsWith('audio/') ? 'audio' : 'video',
+    stage: null
+  }));
+}
+
+function updateLibraryInfo(folderTitle) {
+  if (folderTitle) $('folder').textContent = folderTitle;
+  $('count').textContent = items.length
+    ? items.length + (items.length === 1 ? ' arquivo' : ' arquivos')
+    : 'Nenhuma mídia encontrada';
+}
+
+/* Abrir pasta (substitui a lista atual) */
+$('picker').onchange = e => {
+  const newItems = mapMediaFiles(e.target.files);
+  items = newItems;
+  cur = -1;
+  const folderName = e.target.files[0]?.webkitRelativePath?.split('/')[0] || 'Biblioteca';
+  updateLibraryInfo(folderName);
   renderList();
   if (items.length) play(0); else $('empty').style.display = 'grid';
+  e.target.value = '';
+};
+
+/* Adicionar arquivos específicos (mantém os existentes e adiciona ao final) */
+$('filePicker').onchange = e => {
+  const added = mapMediaFiles(e.target.files);
+  if (!added.length) {
+    showOsd('NENHUM ARQUIVO SUPORTADO');
+    e.target.value = '';
+    return;
+  }
+  const startIndex = items.length;
+  items.push(...added);
+  updateLibraryInfo($('folder').textContent === 'Biblioteca' ? 'Arquivos selecionados' : null);
+  renderList();
+  if (cur === -1) {
+    play(startIndex);
+  } else {
+    showOsd(`+${added.length} ${added.length === 1 ? 'ARQUIVO ADICIONADO' : 'ARQUIVOS ADICIONADOS'}`);
+  }
   e.target.value = '';
 };
 

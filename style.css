@@ -81,8 +81,9 @@ video{width:100%;height:100%;object-fit:contain;display:block;background:#000;
 .osd.show{opacity:1;transition:none}
 .empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--amber);
   font:20px/1.5 "Courier New",monospace;text-shadow:0 0 8px #ff9a1f;padding:10%}
-.empty button{margin-top:16px;background:transparent;color:var(--amber);border:2px solid var(--amber);
-  padding:8px 18px;border-radius:4px;font:inherit;text-shadow:inherit}
+.empty-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.empty button{background:transparent;color:var(--amber);border:2px solid var(--amber);
+  padding:8px 16px;border-radius:4px;font:inherit;text-shadow:inherit}
 .empty button:hover{background:#ffb23f22}
 
 /* controles */
@@ -100,12 +101,14 @@ input[type=range]{accent-color:#7a3e12;height:24px}
 .led.on{background:#ff5a3c;box-shadow:0 0 8px #ff5a3c}
 
 /* playlist */
-.list{width:300px;max-width:100%;background:var(--panel);border:1px solid var(--panel-line);border-radius:14px;
+.list{width:330px;max-width:100%;background:var(--panel);border:1px solid var(--panel-line);border-radius:14px;
   display:flex;flex-direction:column;max-height:calc(100vh - 48px);min-height:300px}
 .list header{padding:14px;border-bottom:1px solid var(--panel-line);display:flex;justify-content:space-between;align-items:center;gap:8px}
 .list h2{font-size:15px;font-weight:700}
 .list small{color:#a79d8a}
-.open{background:var(--amber);color:#2b1a05;border:0;border-radius:8px;padding:8px 12px;font-weight:700}
+.header-btns{display:flex;gap:6px;flex-shrink:0}
+.open{background:var(--amber);color:#2b1a05;border:0;border-radius:8px;padding:7px 10px;font-size:13px;font-weight:700;white-space:nowrap}
+.open.secondary{background:#342d26;color:var(--amber);border:1px solid #ffb23f66}
 .open:hover{filter:brightness(1.1)}
 ol{list-style:none;padding:6px;overflow:auto;flex:1}
 ol button{display:block;width:100%;text-align:left;background:none;border:0;color:#e8e0cf;padding:9px 10px;border-radius:8px}

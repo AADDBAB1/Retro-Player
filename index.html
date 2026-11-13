@@ -26,8 +26,12 @@
       <canvas id="noise" width="160" height="100"></canvas>
       <div class="osd" id="osd"></div>
       <div class="empty" id="empty">
-        <div>SEM SINAL<br>Escolha uma pasta com<br>vídeos ou músicas<br>
-          <button id="emptyBtn">Abrir pasta</button></div>
+        <div>SEM SINAL<br>Escolha uma pasta ou<br>selecione vídeos e músicas<br>
+          <div class="empty-actions">
+            <button id="emptyBtn">Abrir pasta</button>
+            <button id="emptyFilesBtn">+ Arquivos</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,14 +54,18 @@
 
 <aside class="list">
   <header>
-    <div><h2 id="folder">Biblioteca</h2><small id="count">Nenhuma pasta aberta</small></div>
-    <button class="open" id="open">Abrir pasta</button>
+    <div><h2 id="folder">Biblioteca</h2><small id="count">Nenhuma mídia carregada</small></div>
+    <div class="header-btns">
+      <button class="open" id="open">Abrir pasta</button>
+      <button class="open secondary" id="openFiles" title="Adicionar arquivos específicos">+ Arquivos</button>
+    </div>
   </header>
   <ol id="ol"></ol>
   <p class="hint" id="hint">Os arquivos são lidos localmente; nada é enviado. AVI, WMV e similares são convertidos no navegador (precisa de internet na primeira vez). Atalhos: espaço, ← →, N, P, F.</p>
 </aside>
 
 <input type="file" id="picker" webkitdirectory directory multiple hidden>
+<input type="file" id="filePicker" accept="audio/*,video/*,.mkv,.avi,.wmv,.flv,.m2ts,.mts,.mpg,.mpeg,.3gp,.flac,.opus,.wma" multiple hidden>
 
 <script src="script.js"></script>
 </body>
